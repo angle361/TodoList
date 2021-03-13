@@ -44,8 +44,16 @@ Item.insertMany(defaultItems,function(err){
 app.get("/", function(req, res) {
 
 // const day = date.getDate();
+  Item.find({},function(err,result){
+     if(err){
+       console.log(err);
+     }
+     else{
+      res.render("list", {listTitle: "Today", newListItems: result});
+     }
+  });
 
-  res.render("list", {listTitle: "Today", newListItems: items});
+ 
 
 });
 
