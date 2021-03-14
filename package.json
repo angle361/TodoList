@@ -9,7 +9,7 @@
   "author": "",
   "license": "ISC",
   "engines": {            //heroku
-    "node": "14.x"
+    "node": "v14.15.1"
   },
   "dependencies": {
     "body-parser": "^1.18.3",
