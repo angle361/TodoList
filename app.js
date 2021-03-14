@@ -30,6 +30,14 @@ const item3 = new Item({
 });
 
 const defaultItems = [item1, item2, item3];
+
+const listSchema = {
+  name : String,
+  items : [itemsSchema]
+};
+
+const List = mongoose.model("List", listSchema);
+
 // Item.insertMany(defaultItems,function(err){
 //     if(err){
 //       console.log(err);
@@ -70,7 +78,7 @@ app.post("/", function(req, res){
   const item = new Item({
      name :req.body.newItem
   });
-
+  
   if (req.body.list === "Work") {
     workItems.push(item);
     res.redirect("/work");
@@ -94,12 +102,38 @@ app.post("/delete",function(req,res){
     }
   });
 });
-app.get("/work", function(req,res){
-  res.render("list", {listTitle: "Work List", newListItems: workItems});
-});
+// app.get("/work", function(req,res){
+//   res.render("list", {listTitle: "Work List", newListItems: workItems});
+// });
+                                                     //instead ogf making sepearte routes we wil do something diff
+// app.get("/about", function(req, res){
+//   res.render("about");
+// });
 
-app.get("/about", function(req, res){
-  res.render("about");
+app.get("/:custumlistName",function(req, res){
+  //console.log(req.params.CustumlistName);
+  const custumlistName = req.params.custumlistName;
+  List.findOne({name:custumlistName}, function(err,foundlist){
+    if(!err){
+     if(!foundlist){            //foundlist is an object
+       console.log("no");
+       const list = new List({
+        name : custumlistName,
+         items : defaultItems
+        });
+        list.save();
+       res.redirect("/" + custumlistName);
+     }
+     else{
+       console.log("exist");
+       res.render("list", {listTitle: foundlist.name, newListItems: foundlist.items});
+     }
+    }
+  
+  
+  });
+  res.render("list", {listTitle: custumlistName, newListItems: defaultItems});
+  //res.redirect("/");
 });
 
 app.listen(3000, function() {
