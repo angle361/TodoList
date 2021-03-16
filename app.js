@@ -40,6 +40,8 @@ const listSchema = {
 
 const List = mongoose.model("List", listSchema);
 
+const year=new Date().getFullYear();
+const Today= new Date().getDate() +" "+ (new Date().getMonth()+1) +", "+ new Date().getDay();
 
 app.get("/", function(req, res) {
 
@@ -55,7 +57,7 @@ app.get("/", function(req, res) {
       });
       res.redirect("/");
     } else {
-      res.render("list", {listTitle: "Today", newListItems: foundItems});
+      res.render("list", {listTitle: Today, newListItems: foundItems, year: year});
     }
   });
 
