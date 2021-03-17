@@ -43,7 +43,7 @@ const List = mongoose.model("List", listSchema);
 const Year = new Date().getFullYear();
 const weekday=["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
 const month = ["January","February","March","April","May" , "June", "July", "August", "September", "October", "November","December"];
-const today= new Date().getDate() +" "+ month[(new Date().getMonth()+1)] +", "+ weekday[new Date().getDay()];
+const Today= new Date().getDate() +" "+ month[(new Date().getMonth()+1)] +", "+ weekday[new Date().getDay()];
 
 app.get("/", function(req, res) {
 
@@ -60,7 +60,7 @@ app.get("/", function(req, res) {
       res.redirect("/");
     } else {
       //res.sender("footer",{Year: Year});
-      res.render("list", {listTitle: "Today", newListItems: foundItems});
+      res.render("list", {listTitle: Today, newListItems: foundItems});
       //console.log(Today);
       
     }
@@ -102,7 +102,7 @@ app.post("/", function(req, res){
     name: itemName
   });
 
-  if (listName === "Today"){
+  if (listName === Today){
     item.save();
     res.redirect("/");
   } else {
@@ -118,7 +118,7 @@ app.post("/delete", function(req, res){
   const checkedItemId = req.body.checkbox;
   const listName = req.body.listName;
 
-  if (listName === "Today") {
+  if (listName === Today) {
     Item.findByIdAndRemove(checkedItemId, function(err){
       if (!err) {
         console.log("Successfully deleted checked item.");
