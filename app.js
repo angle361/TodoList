@@ -43,7 +43,7 @@ const List = mongoose.model("List", listSchema);
 const Year = new Date().getFullYear();
 const weekday=["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
 const month = ["January","February","March","April","May" , "June", "July", "August", "September", "October", "November","December"];
-const Today= new Date().getDate() +" "+ month[(new Date().getMonth()+1)] +", "+ weekday[new Date().getDay()];
+const Today= new Date().getDate() +" "+ month[(new Date().getMonth())] +", "+ weekday[new Date().getDay()];
 
 app.get("/", function(req, res) {
 
