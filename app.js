@@ -40,8 +40,10 @@ const listSchema = {
 
 const List = mongoose.model("List", listSchema);
 
-const year=new Date().getFullYear();
-const Today= new Date().getDate() +" "+ (new Date().getMonth()+1) +", "+ new Date().getDay();
+const Year = new Date().getFullYear();
+const weekday=["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+const month = ["January","February","March","April","May" , "June", "July", "August", "September", "October", "November","December"];
+const Today= new Date().getDate() +" "+ month[(new Date().getMonth()+1)] +", "+ weekday[new Date().getDay()];
 
 app.get("/", function(req, res) {
 
@@ -57,7 +59,10 @@ app.get("/", function(req, res) {
       });
       res.redirect("/");
     } else {
-      res.render("list", {listTitle: Today, newListItems: foundItems, year: year});
+      //res.sender("footer",{Year: Year});
+      res.render("list", {listTitle: Today, newListItems: foundItems,Year: Year});
+      //console.log(Today);
+      
     }
   });
 
@@ -138,7 +143,7 @@ app.get("/about", function(req, res){
 
 let port = process.env.PORT;
 if (port == null || port == "") {          //heroku ka port
-  port = 3000;                              //apne port pr bhi chalega
+  port = 5000;                              //apne port pr bhi chalega
 }
 //app.listen(port);
 
